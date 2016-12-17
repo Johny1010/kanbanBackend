@@ -65,6 +65,28 @@ module.exports = function(app) {
 		});
 	});
 
+	//PUT project
+	app.put('/app/kanban/projects/:id', function(req, res) {
+		Project.findById(req.params.id, function(err, project) {
+			if (err) {
+				res.send(err);
+			}
+
+			if (req.body.name) {
+				project.name = req.body.name;
+			}
+			if (req.body.description) {
+				project.description = req.body.description;
+			}
+			project.save(function(err) {
+				if (err) {
+					res.send(err);
+				}
+				res.json(project);
+			});
+		});
+	});
+
 	//-------------------COLUMNS-----------------
 
 	//POST new column in kanban
